@@ -35,4 +35,8 @@ public class EquipmentController {
     //public List<Equipment> getAllAvailable(@PathVariable String name){
     //    return  equipmentService.findAllEquiped(name);
     //}
+    @DeleteMapping
+    public void deleteById(@PathVariable int id) {
+        equipmentService.deleteById(id);
+    }
 }
