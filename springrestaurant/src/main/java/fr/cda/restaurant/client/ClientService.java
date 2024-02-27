@@ -4,7 +4,7 @@ import java.rmi.server.RemoteServer;
 import java.util.List;
 
 public class ClientService {
-    private final ClientRepository clientRepository,
+    private final ClientRepository clientRepository;
     private final ReservationService reservationService;
 
     public ClientService(
