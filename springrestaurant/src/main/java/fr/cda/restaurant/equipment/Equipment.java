@@ -25,6 +25,6 @@ public class Equipment {
     private String name;
 
     @Column(nullable = false)
-    private Boolean equiped;
+    private boolean equiped;
 
 }
