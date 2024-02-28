@@ -2,9 +2,13 @@ package fr.cda.restaurant.restaurant.dto;
 
 import fr.cda.restaurant.equipment.Equipment;
 import fr.cda.restaurant.menu.Menu;
+import fr.cda.restaurant.reservation.Reservation;
+import fr.cda.restaurant.review.Review;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 public class RestaurantCompletDto {
     private Integer id;
     private String nom;

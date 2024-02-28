@@ -44,7 +44,7 @@ public class Restaurant {
     private int couvertsDispo;
 
     @Column(nullable = false)
-    private boolean annivDipo;
+    private boolean annivDispo;
 
     @ManyToOne // One Restaurant to Many Menus
     @JoinColumn(name = "menu_id")

@@ -1,5 +1,6 @@
 package fr.cda.restaurant.menu.dto;
 
+import fr.cda.restaurant.restaurant.Restaurant;
 import lombok.Data;
 
 @Data
