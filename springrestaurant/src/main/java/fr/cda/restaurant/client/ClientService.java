@@ -1,5 +1,8 @@
 package fr.cda.restaurant.client;
 
+import fr.cda.restaurant.reservation.Reservation;
+import fr.cda.restaurant.reservation.ReservationService;
+
 import java.rmi.server.RemoteServer;
 import java.util.List;
 
@@ -72,7 +75,7 @@ public class ClientService {
                         .toList()
         );
 
-        return clientAvecReservationDto;
+        return clientAvecReservationDto; 1
     }
 
     public List<Reservation> findReservationByClientId(Integer id) {
