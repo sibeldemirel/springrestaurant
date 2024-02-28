@@ -21,10 +21,6 @@ public class EquipmentService {
         return equipmentRepository.findAll();
     }
 
-    public Optional<Equipment> findAllByName(Equipment equipment) {
-        return equipmentRepository.findByEquipmentName(equipment.getName());
-    }
-
     //public Optional<Equipment> findAllEquiped(Equipment equipment) {
     //    return equipmentRepository.findByEquipmentEquiped(String.valueOf(equipment.getEquiped()));
     //}

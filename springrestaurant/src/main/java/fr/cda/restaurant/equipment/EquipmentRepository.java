@@ -6,6 +6,4 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EquipmentRepository extends JpaRepository<Equipment, Integer> {
-    Optional<Equipment> findByEquipmentName(String name);
-    Optional<Equipment> findByEquipmentEquiped(String name);
 }
