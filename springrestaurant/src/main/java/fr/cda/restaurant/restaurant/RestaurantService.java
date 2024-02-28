@@ -78,7 +78,10 @@ public class RestaurantService {
                 );
     }
 
-    public List<Restaurant> findByNomRestaurant(String restaurantName) {
-        return restaurantRepository.findByNom(restaurantName);
+    public Restaurant findByNomRestaurant(String nom) {
+        return restaurantRepository.findByNom(nom)
+                .orElseThrow(
+                        () -> new NotFoundException("Aucun restaurant avec le nom " + nom)
+                );
     }
 }
