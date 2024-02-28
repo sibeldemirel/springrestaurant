@@ -96,6 +96,7 @@ public class MenuService {
     }
 
     public Optional<List<Menu>> findAllByRestaurantName(String nomRestaurant) {
-        return menuRepository.findAllByRestaurantName(nomRestaurant);
+        return Optional.ofNullable(menuRepository.findAllByRestaurantName(nomRestaurant)
+                .orElseThrow(() -> new NotFoundException("Aucun menu trouvé avec le restaurant nom " + nomRestaurant)));
     }
 }
