@@ -1,10 +1,11 @@
 package fr.cda.restaurant.client;
 
-import java.rmi.server.RemoteServer;
+import fr.cda.restaurant.reservation.Reservation;
+
 import java.util.List;
 
 public class ClientService {
-    private final ClientRepository clientRepository,
+    private final ClientRepository clientRepository;
     private final ReservationService reservationService;
 
     public ClientService(
