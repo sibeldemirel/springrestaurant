@@ -57,12 +57,12 @@ public class RestaurantController {
     }
 
     @GetMapping("complet/{restaurantName}") // /restaurant/complet/SushiLand
-    public List<RestaurantCompletDto> findByNomRestaurant(@PathVariable String restaurantName) {
+    public RestaurantCompletDto findByNomRestaurant(@PathVariable String restaurantName) {
         return restaurantMapper.toRestaurantComplet(restaurantService.findByNomRestaurant(restaurantName));
     }
 
     @GetMapping("reduit/{restaurantName}") // /restaurant/reduit/SushiLand
-    public List<RestaurantReduitDto> findByNomRestaurantReduit(@PathVariable String restaurantName) {
+    public RestaurantReduitDto findByNomRestaurantReduit(@PathVariable String restaurantName) {
         return restaurantMapper.toRestaurantReduit(restaurantService.findByNomRestaurant(restaurantName));
     }
 
