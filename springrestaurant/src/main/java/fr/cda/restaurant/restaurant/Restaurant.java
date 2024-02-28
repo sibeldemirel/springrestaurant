@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import fr.cda.restaurant.equipment.Equipment;
 import fr.cda.restaurant.menu.Menu;
+import fr.cda.restaurant.reservation.Reservation;
+import fr.cda.restaurant.review.Review;
 import jakarta.persistence.*;
 import lombok.*;
 
