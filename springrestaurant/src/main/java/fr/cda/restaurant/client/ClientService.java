@@ -34,9 +34,9 @@ public class ClientService {
             erreurs.add("Le nom du client est obligatoire");
         }
 
-        if (String.valueOf(client.getPhoneNumber()).length() != 10) {
-            erreurs.add("Le numéro de portable du client doit contenir 10 chiffres");
-        }
+        //if (String.valueOf(client.getPhoneNumber()).length() != 10) {
+        //    erreurs.add("Le numéro de portable du client doit contenir 10 chiffres");
+        //}
 
         if (!erreurs.isEmpty()) {
             throw new BadRequestException(erreurs);

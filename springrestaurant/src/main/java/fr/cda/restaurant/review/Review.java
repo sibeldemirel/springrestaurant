@@ -21,8 +21,11 @@ public class Review {
     @GeneratedValue
     private Integer id;
 
-    @Column(nullable = false)
-    private String nomResto;
+    @Column(name = "restaurant_id")
+    private Integer restaurantId;
+
+    @Column(name = "nomrestaurant")
+    private String restaurantName;
 
     @Column(nullable = false)
     private String pseudo;

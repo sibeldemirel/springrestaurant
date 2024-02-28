@@ -30,7 +30,7 @@ public class ReviewService {
     private static void verifyReview(Review review) {
         List<String> erreurs = new ArrayList<>();
 
-        if (review.getNomResto() == null) {
+        if (review.getRestaurantName() == null) {
             erreurs.add("Le nom du restaurant est obligatoire");
         }
 

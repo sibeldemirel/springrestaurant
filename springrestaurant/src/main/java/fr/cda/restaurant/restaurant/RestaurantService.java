@@ -42,9 +42,9 @@ public class RestaurantService {
             erreurs.add("Les horaires du restaurant sont obligatoires");
         }
 
-       if (restaurant.getCouvertsMax() == 0) {
-            erreurs.add("Le nombre de couverts max du restaurant est obligatoire");
-        }
+       //if (restaurant.getCouvertsMax() === null) {
+        //    erreurs.add("Le nombre de couverts max du restaurant est obligatoire");
+        //}
 
         if (!erreurs.isEmpty()) {
             throw new BadRequestException(erreurs);

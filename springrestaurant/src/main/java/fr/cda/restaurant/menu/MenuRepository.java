@@ -16,6 +16,6 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     Optional<List<Menu>> findAllByRestaurantId(Integer id);
 
     // SELECT * FROM menu WHERE realisateur_nom IS ...
-    Optional<List<Menu>> findAllByRestaurantName(String nomRestaurant);
+    Optional<List<Menu>> findAllByRestaurantNom(String nomRestaurant);
 
 }

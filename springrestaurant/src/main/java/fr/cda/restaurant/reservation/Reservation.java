@@ -1,6 +1,7 @@
 package fr.cda.restaurant.reservation;
 
 import fr.cda.restaurant.client.Client;
+import fr.cda.restaurant.restaurant.Restaurant;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,12 @@ public class Reservation {
     @OneToOne // One reservation to one client
     @JoinColumn(name = "client_id")
     private  Client client;
+
+    @Column(name = "restaurant_id")
+    private Integer restaurantId;
+
+    @Column(name = "nomrestaurant")
+    private String restaurantName;
 
     @Column(nullable = false)
     private LocalDate creneauH;
