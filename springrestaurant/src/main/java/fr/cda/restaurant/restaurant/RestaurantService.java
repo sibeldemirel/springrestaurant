@@ -2,9 +2,13 @@ package fr.cda.restaurant.restaurant;
 
 import fr.cda.restaurant.exceptions.BadRequestException;
 import fr.cda.restaurant.exceptions.NotFoundException;
+import fr.cda.restaurant.reservation.Reservation;
+import fr.cda.restaurant.reservation.ReservationRepository;
+import fr.cda.restaurant.restaurant.dto.RestaurantDispoDto;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +16,15 @@ import java.util.List;
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
-    public RestaurantService(RestaurantRepository restaurantRepository
+    private final ReservationRepository reservationRepository;
+
+    public RestaurantService(
+            RestaurantRepository restaurantRepository,
+            ReservationRepository reservationRepository
     ) {
 
         this.restaurantRepository = restaurantRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     public List<Restaurant> findAll() {
@@ -39,10 +48,6 @@ public class RestaurantService {
         if (restaurant.getAdresse() == null) {
             erreurs.add("L'adresse du restaurant est obligatoire");
         }
-
-       //if (restaurant.getCouvertsMax() === null) {
-        //    erreurs.add("Le nombre de couverts max du restaurant est obligatoire");
-        //}
 
         if (!erreurs.isEmpty()) {
             throw new BadRequestException(erreurs);
@@ -83,4 +88,19 @@ public class RestaurantService {
                         () -> new NotFoundException("Aucun restaurant avec le nom " + nom)
                 );
     }
+
+    public RestaurantDispoDto getDispoParDate(Integer restaurantId, LocalDate date) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new NotFoundException("Restaurant non trouvé"));
+
+        int totalCouvertsReserves = reservationRepository.findByRestaurantIdAndDateReservation(restaurantId, date)
+                .stream()
+                .mapToInt(Reservation::getNbInvite)
+                .sum();
+
+        int couvertsDispo = restaurant.getCouvertsMax() - totalCouvertsReserves;
+
+        return new RestaurantDispoDto(restaurant.getNom(),date, couvertsDispo);
+    }
+
 }

@@ -6,6 +6,7 @@ import fr.cda.restaurant.exceptions.NotFoundException;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,6 +78,18 @@ public class ReservationService {
     public Optional<List<Reservation>> findAllByRestaurantName(String nomRestaurant) {
         return Optional.ofNullable(reservationRepository.findAllByRestaurantNom(nomRestaurant)
                 .orElseThrow(() -> new NotFoundException("Aucune réservation trouvé avec le restaurant nom " + nomRestaurant)));
+    }
+
+
+    public int getTotalCouvertsReservesPourDate(Integer restaurantId, LocalDate dateReservation) {
+
+        List<Reservation> reservations = reservationRepository.findByRestaurantIdAndDateReservation(restaurantId, dateReservation);
+
+        int totalCouverts = reservations.stream()
+                .mapToInt(Reservation::getNbInvite)
+                .sum();
+
+        return totalCouverts;
     }
 
 }

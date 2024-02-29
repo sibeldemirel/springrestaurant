@@ -80,8 +80,12 @@ public class ReservationController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant non trouvé");
         }
 
-        if (restaurant.getCouvertsDispo() < requestDto.getNbInvite()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Pas assez de couverts disponibles");
+
+        int totalCouvertsReserves = reservationService.getTotalCouvertsReservesPourDate(restaurant.getId(), requestDto.getDateReservation());
+
+
+        if (restaurant.getCouvertsMax() - totalCouvertsReserves < requestDto.getNbInvite()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Pas assez de couverts disponibles pour la date choisie");
         }
 
         Reservation reservation = new Reservation();
@@ -91,11 +95,10 @@ public class ReservationController {
         reservation.setNbInvite(requestDto.getNbInvite());
         reservation.setAnniv(requestDto.isAnniv());
 
-        restaurant.setCouvertsDispo(restaurant.getCouvertsDispo() - requestDto.getNbInvite());
 
         Reservation savedReservation = reservationService.save(reservation);
-        restaurantService.save(restaurant);
 
         return reservationMapper.toReservationComplet(savedReservation);
     }
+
 }
