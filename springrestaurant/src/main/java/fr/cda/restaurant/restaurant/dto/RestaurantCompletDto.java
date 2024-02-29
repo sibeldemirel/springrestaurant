@@ -21,11 +21,10 @@ public class RestaurantCompletDto {
     private String nom;
     private String adresse;
     private int couvertsMax;
-    private int couvertsDispo;
     private boolean annivDispo;
     private List<MenuReduitDto> menus;
     private List<EquipmentReduitDto> equipments;
-    private List<ReviewReduitDto> reviews;
+   // private List<ReviewReduitDto> reviews;
     private List<ReservationReduitDto> reservations;
     private int totalRating;
 }
