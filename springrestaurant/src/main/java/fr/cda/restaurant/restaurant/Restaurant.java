@@ -11,6 +11,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,9 +37,6 @@ public class Restaurant {
     private String adresse;
 
     @Column(nullable = false)
-    private LocalDate horaire;
-
-    @Column(nullable = false)
     private int couvertsMax;
 
     @Column(nullable = false)
@@ -58,10 +57,10 @@ public class Restaurant {
     @JoinColumn(name = "review_id")
     private Review review;
 
-    @ManyToOne // One Restaurant to Many Reservations
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
+    @OneToMany(mappedBy = "restaurant")
+    private List<Reservation> reservations = new ArrayList<>();
 
     @Column(nullable = false)
     private int totalRating;
+
 }

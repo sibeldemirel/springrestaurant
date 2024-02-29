@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class ReservationCompletDto {
     private Integer id;
     private Client client;
-    private LocalDate creneauH;
+    private LocalDate dateReservation;
     private Integer nbInvite;
     private boolean anniv;
 }

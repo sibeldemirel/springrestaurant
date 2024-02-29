@@ -7,5 +7,5 @@ public class ClientCompletDto {
 
     private Integer id;
     private String nom;
-    private int phoneNumber;
+    private int telephone;
 }

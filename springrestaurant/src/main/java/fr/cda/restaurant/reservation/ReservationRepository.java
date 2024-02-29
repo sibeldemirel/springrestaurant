@@ -1,8 +1,6 @@
 
 package fr.cda.restaurant.reservation;
 
-import fr.cda.restaurant.client.Client;
-import fr.cda.restaurant.review.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,5 +12,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     Optional<List<Reservation>> findAllByRestaurantId(Integer id);
 
     // SELECT * FROM menu WHERE realisateur_nom IS ...
-    Optional<List<Reservation>> findAllByRestaurantName(String nomRestaurant);
+    Optional<List<Reservation>> findAllByRestaurantNom(String nomRestaurant);
 }

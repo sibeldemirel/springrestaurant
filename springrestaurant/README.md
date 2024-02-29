@@ -3,7 +3,7 @@
 class Restaurant implements management{
 - nom : String
 - adresse : String
-- horaire : LocalDate
+- dateReservation : LocalDate
 - typeCuisine : String
 - couvertsMax : int
 - couvertsDispo : int
@@ -28,7 +28,7 @@ class Equipment {
 class Reservation{
 - client : Client
 - nomResto : String
-- creneauH : LocalDate
+- dateReservation : LocalDate
 - nbInvite : int
 - anniv : Boolean
 + reserver() : public

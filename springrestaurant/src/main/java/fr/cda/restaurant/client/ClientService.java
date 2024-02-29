@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -30,13 +31,13 @@ public class ClientService {
     private static void verifyClient(Client client) {
         List<String> erreurs = new ArrayList<>();
 
-        if (client.getNom() == null) {
+        if (client.getNom() == null || client.getNom().trim().isEmpty()) {
             erreurs.add("Le nom du client est obligatoire");
         }
 
-        //if (String.valueOf(client.getPhoneNumber()).length() != 10) {
-        //    erreurs.add("Le numéro de portable du client doit contenir 10 chiffres");
-        //}
+        if (String.valueOf(client.getTelephone()).length() < 9 || String.valueOf(client.getTelephone()).length() > 15) {
+            erreurs.add("Le numéro de téléphone du client doit contenir entre 9 et 15 chiffres.");
+        }
 
         if (!erreurs.isEmpty()) {
             throw new BadRequestException(erreurs);
@@ -63,10 +64,21 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
-    public Client findByNom(String nom) {
-        return clientRepository.findByNom(nom)
-                .orElseThrow(
-                        () -> new NotFoundException("Aucun client avec le nom " + nom)
-                );
+    public List<Client> findByNom(String nom) {
+        return clientRepository.findByNom(nom);
     }
+
+    public Client findOrCreateClient(String nom, int telephone) {
+
+        Optional<Client> clientOpt = clientRepository.findByNomAndTelephone(nom, telephone);
+        return clientOpt.orElseGet(() -> {
+
+            Client newClient = new Client();
+            newClient.setNom(nom);
+            newClient.setTelephone(telephone);
+            return clientRepository.save(newClient);
+        });
+    }
+
+
 }

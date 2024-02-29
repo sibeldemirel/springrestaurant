@@ -37,7 +37,7 @@ public class ReservationService {
             erreurs.add("Le client est obligatoire");
         }
 
-        if (reservation.getCreneauH() == null) {
+        if (reservation.getDateReservation() == null) {
             erreurs.add("Le creneau horaire est obligatoire");
         }
 
@@ -75,7 +75,7 @@ public class ReservationService {
     }
 
     public Optional<List<Reservation>> findAllByRestaurantName(String nomRestaurant) {
-        return Optional.ofNullable(reservationRepository.findAllByRestaurantName(nomRestaurant)
+        return Optional.ofNullable(reservationRepository.findAllByRestaurantNom(nomRestaurant)
                 .orElseThrow(() -> new NotFoundException("Aucune réservation trouvé avec le restaurant nom " + nomRestaurant)));
     }
 

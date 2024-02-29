@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/clients")
@@ -33,7 +34,7 @@ public class ClientController {
         return clientService.save(client);
     }
 
-    @GetMapping("/{id}") // /menu/1
+    @GetMapping("/{id}") // /clients/1
     public ClientCompletDto findById(@PathVariable Integer id) {
         Client client = clientService.findById(id);
 
@@ -48,6 +49,14 @@ public class ClientController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Integer id) {
         clientService.deleteById(id);
+    }
+
+    @GetMapping("/search") // /clients/search?nom=toto
+    public List<ClientCompletDto> findByNom(@RequestParam String nom) {
+        List<Client> clients = clientService.findByNom(nom);
+        return clients.stream()
+                .map(clientMapper::toClientComplet)
+                .collect(Collectors.toList());
     }
 
 }

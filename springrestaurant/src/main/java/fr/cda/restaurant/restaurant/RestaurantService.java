@@ -38,10 +38,6 @@ public class RestaurantService {
             erreurs.add("L'adresse du restaurant est obligatoire");
         }
 
-        if (restaurant.getHoraire() == null) {
-            erreurs.add("Les horaires du restaurant sont obligatoires");
-        }
-
        //if (restaurant.getCouvertsMax() === null) {
         //    erreurs.add("Le nombre de couverts max du restaurant est obligatoire");
         //}

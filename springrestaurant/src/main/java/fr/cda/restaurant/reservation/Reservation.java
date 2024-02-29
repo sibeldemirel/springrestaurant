@@ -16,21 +16,20 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Reservation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne // One reservation to one client
     @JoinColumn(name = "client_id")
     private  Client client;
 
-    @Column(name = "restaurant_id")
-    private Integer restaurantId;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 
-    @Column(name = "nomrestaurant")
-    private String restaurantName;
 
     @Column(nullable = false)
-    private LocalDate creneauH;
+    private LocalDate dateReservation;
 
     @Column(nullable = false)
     private Integer nbInvite;

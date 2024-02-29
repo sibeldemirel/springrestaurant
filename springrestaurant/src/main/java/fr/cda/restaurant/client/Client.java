@@ -26,6 +26,6 @@ public class Client {
     private String nom;
 
     @Column(nullable = false)
-    private int  phoneNumber;
+    private int telephone;
 }
 
