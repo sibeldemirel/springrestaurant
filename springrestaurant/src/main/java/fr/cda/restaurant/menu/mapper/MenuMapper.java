@@ -16,7 +16,7 @@ public interface MenuMapper {
     public MenuCompletDto toMenuComplet(Menu menu);
 
     public List<MenuCompletDto> toMenuComplet (List<Menu> menus);
-    public MenuReduitDto toFilmReduit(Menu menu);
+    public MenuReduitDto toMenuReduit(Menu menu);
 
     public List<MenuReduitDto> toMenuReduit (List<Menu> menus);
 

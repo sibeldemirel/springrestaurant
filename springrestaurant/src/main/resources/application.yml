@@ -1,1 +1,23 @@
+spring:
+  data:
+    jdbc:
+      repositories:
+        enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/restaurant?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: restaurantadmin
+    password: restaurant
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  error:
+    include-stacktrace: never
+  port: 8080
 
+springdoc:
+  swagger-ui:
+    path: /api/restaurant/docs
+  api-docs:
+    path: /api/restaurant/docs

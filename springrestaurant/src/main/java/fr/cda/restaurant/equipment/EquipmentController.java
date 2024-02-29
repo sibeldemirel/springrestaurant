@@ -1,17 +1,27 @@
 package fr.cda.restaurant.equipment;
 
+import fr.cda.restaurant.equipment.dto.EquipmentReduitDto;
+import fr.cda.restaurant.equipment.mapper.EquipmentMapper;
+import fr.cda.restaurant.menu.Menu;
+import fr.cda.restaurant.menu.dto.MenuReduitDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/equipment")
+@RequestMapping("/equipments")
 public class EquipmentController {
     private final EquipmentService equipmentService;
 
-    public EquipmentController(EquipmentService equipmentService) {
+    private final EquipmentMapper equipmentMapper;
+
+    public EquipmentController(
+            EquipmentService equipmentService,
+            EquipmentMapper equipmentMapper) {
         this.equipmentService = equipmentService;
+        this.equipmentMapper = equipmentMapper;
     }
 
     @PostMapping
@@ -38,5 +48,12 @@ public class EquipmentController {
     @DeleteMapping
     public void deleteById(@PathVariable int id) {
         equipmentService.deleteById(id);
+    }
+
+    @PostMapping("/{restaurantId}/equipments")
+    public ResponseEntity<EquipmentReduitDto> addEquipmentToRestaurant(@PathVariable Integer restaurantId, @RequestBody Equipment equipmentDetails) {
+        Equipment newEquipment = equipmentService.createEquipmentForRestaurant(restaurantId, equipmentDetails);
+        EquipmentReduitDto EquipmentDto = equipmentMapper.toEquipmentReduit(newEquipment);
+        return new ResponseEntity<>(EquipmentDto, HttpStatus.CREATED);
     }
 }

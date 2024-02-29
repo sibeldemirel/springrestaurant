@@ -1,13 +1,18 @@
 package fr.cda.restaurant.restaurant;
 
 import fr.cda.restaurant.restaurant.dto.RestaurantCompletDto;
+import fr.cda.restaurant.restaurant.dto.RestaurantDispoDto;
 import fr.cda.restaurant.restaurant.dto.RestaurantReduitDto;
 import fr.cda.restaurant.restaurant.mapper.RestaurantMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
+@RestController
+@RequestMapping("/restaurants")
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
@@ -64,6 +69,11 @@ public class RestaurantController {
     @GetMapping("reduit/{restaurantName}") // /restaurant/reduit/SushiLand
     public RestaurantReduitDto findByNomRestaurantReduit(@PathVariable String restaurantName) {
         return restaurantMapper.toRestaurantReduit(restaurantService.findByNomRestaurant(restaurantName));
+    }
+
+    @GetMapping("/{restaurantId}/disponibilite")
+    public RestaurantDispoDto getDispoParDate(@PathVariable Integer restaurantId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return restaurantService.getDispoParDate(restaurantId, date);
     }
 
 }

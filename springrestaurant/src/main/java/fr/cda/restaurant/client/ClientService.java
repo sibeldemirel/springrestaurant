@@ -1,81 +1,84 @@
 package fr.cda.restaurant.client;
 
-import java.rmi.server.RemoteServer;
-import java.util.List;
+import fr.cda.restaurant.exceptions.BadRequestException;
+import fr.cda.restaurant.exceptions.NotFoundException;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
 public class ClientService {
     private final ClientRepository clientRepository;
-    private final ReservationService reservationService;
 
     public ClientService(
-            ClientRepository clientRepository,
-            ReservationService reservationService) {
+            ClientRepository clientRepository
+    ) {
         this.clientRepository = clientRepository;
-        this.reservationService = reservationService;
     }
-
 
     public List<Client> findAll() {
         return clientRepository.findAll();
     }
 
-    public Client save(Client client){
+    public Client save(Client client) throws BadRequestException {
+        verifyClient(client);
+
         return clientRepository.save(client);
     }
 
-    public Client findById(int id){
-        return clientRepository
-                .findById(id).orElseThrow(
-                        () -> new NotFoundException(
-                        "Aucun client avec l'ID " + id+"Merci de vérifier L'ID demandé")
+    private static void verifyClient(Client client) {
+        List<String> erreurs = new ArrayList<>();
+
+        if (client.getNom() == null || client.getNom().trim().isEmpty()) {
+            erreurs.add("Le nom du client est obligatoire");
+        }
+
+        if (String.valueOf(client.getTelephone()).length() < 9 || String.valueOf(client.getTelephone()).length() > 15) {
+            erreurs.add("Le numéro de téléphone du client doit contenir entre 9 et 15 chiffres.");
+        }
+
+        if (!erreurs.isEmpty()) {
+            throw new BadRequestException(erreurs);
+        }
+    }
+
+    public Client findById(Integer id) {
+        return clientRepository.findById(id)
+                .orElseThrow(
+                        () -> new NotFoundException("Aucun client avec l'ID " + id)
                 );
     }
 
     public void deleteById(Integer id) {
-        this.findById(id);
-
-        List<Reservation> reservationDeCeClient = reservationService.findAllByClientId(id);
-
-        reservationDeCeClient.forEach(
-                reservation -> {
-                    reservation.setClient(null);
-                    reservationService.save(reservation);
-                }
-        );
-
-        clientRepository.deleteById(id);
-    }
-
-
-    public ClientAvecReservationDto findClientWithReservation(Integer id) {
-        // On récupère le client choisi
         Client client = this.findById(id);
-        // On récupère la liste de ces réservations
-        List<Reservation> reservationDuClient= reservationService.findAllByClientId(id);
-
-        ClientAvecReservationDto clientAvecReservationDto = new ClientAvecReservationDto();
-
-        clientAvecReservationDto.setId(client.getId());
-        clientAvecReservationDto.setNom(client.getNom());
-        clientAvecReservationDto.setPhoneNumber(client.getPhoneNumber());
-
-        clientAvecReservationDto.setReservation(
-                reservationDuClient.stream()
-                        .map(
-                                reservation -> {
-                                    ReservationDto reservationDto = new ReservationDto();
-                                    reservationDto.setId(reservation.getId());
-                                    reservationDto.setCreneauH(reservation.getCreneauH());
-                                    return reservationDto;
-                                }
-                        )
-                        .toList()
-        );
-
-        return clientAvecReservationDto;
+        clientRepository.delete(client);
     }
 
-    public List<Reservation> findReservationByClientId(Integer id) {
-        return reservationService.findAllByClientId(id);
+    public Client update(Client client, Integer id) {
+        if (!clientRepository.existsById(id)) {
+            throw new NotFoundException("Aucun client avec l'ID " + id);
+        }
+        client.setId(id);
+        return clientRepository.save(client);
     }
+
+    public List<Client> findByNom(String nom) {
+        return clientRepository.findByNom(nom);
+    }
+
+    public Client findOrCreateClient(String nom, int telephone) {
+
+        Optional<Client> clientOpt = clientRepository.findByNomAndTelephone(nom, telephone);
+        return clientOpt.orElseGet(() -> {
+
+            Client newClient = new Client();
+            newClient.setNom(nom);
+            newClient.setTelephone(telephone);
+            return clientRepository.save(newClient);
+        });
+    }
+
+
 }

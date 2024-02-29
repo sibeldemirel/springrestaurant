@@ -1,11 +1,10 @@
 package fr.cda.restaurant.reservation;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import fr.cda.restaurant.client.Client;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import fr.cda.restaurant.restaurant.Restaurant;
+import jakarta.persistence.*;
 import lombok.*;
-import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
@@ -13,16 +12,31 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Reservation")
+@Table(name = "reservation")
 @Builder
 @AllArgsConstructor
 public class Reservation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
+
+    @OneToOne // One reservation to one client
+    @JoinColumn(name = "client_id")
     private  Client client;
-    private LocalDate creneauH;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    @JsonBackReference
+    private Restaurant restaurant;
+
+
+    @Column(nullable = false)
+    private LocalDate dateReservation;
+
+    @Column(nullable = false)
     private Integer nbInvite;
+
+    @Column(nullable = false)
     private boolean anniv;
 
 

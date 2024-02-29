@@ -2,6 +2,9 @@ package fr.cda.restaurant.menu;
 
 import fr.cda.restaurant.exceptions.BadRequestException;
 import fr.cda.restaurant.exceptions.NotFoundException;
+import fr.cda.restaurant.restaurant.Restaurant;
+import fr.cda.restaurant.restaurant.RestaurantRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,15 +15,19 @@ import java.util.Optional;
 public class MenuService {
     private final MenuRepository menuRepository;
 
-    public MenuService(MenuRepository menuRepository
+    private final RestaurantRepository restaurantRepository;
+
+    public MenuService(MenuRepository menuRepository, RestaurantRepository restaurantRepository
     ) {
         this.menuRepository = menuRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public List<Menu> findAll() {
         return menuRepository.findAll();
     }
 
+    @Transactional
     public Menu save(Menu menu) throws BadRequestException {
         verifyMenu(menu);
 
@@ -63,6 +70,7 @@ public class MenuService {
         }
     }
 
+
     public Menu findById(Integer id) {
         return menuRepository.findById(id)
                 .orElseThrow(
@@ -70,11 +78,13 @@ public class MenuService {
                 );
     }
 
+    @Transactional
     public void deleteById(Integer id) {
         Menu menu = this.findById(id);
         menuRepository.delete(menu);
     }
 
+    @Transactional
     public Menu update(Menu menu, Integer id) {
         if (!menuRepository.existsById(id)) {
             throw new NotFoundException("Aucun menu avec l'ID " + id);
@@ -96,6 +106,15 @@ public class MenuService {
     }
 
     public Optional<List<Menu>> findAllByRestaurantName(String nomRestaurant) {
-        return menuRepository.findAllByRestaurantName(nomRestaurant);
+        return Optional.ofNullable(menuRepository.findAllByRestaurantNom(nomRestaurant)
+                .orElseThrow(() -> new NotFoundException("Aucun menu trouvé avec le restaurant nom " + nomRestaurant)));
     }
+
+    public Menu createMenuForRestaurant(Integer restaurantId, Menu menu) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new NotFoundException("Restaurant non trouvé avec l'ID: " + restaurantId));
+        menu.setRestaurant(restaurant);
+        return menuRepository.save(menu);
+    }
+
 }
