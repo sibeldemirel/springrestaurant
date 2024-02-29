@@ -2,6 +2,7 @@ package fr.cda.restaurant.restaurant;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import fr.cda.restaurant.equipment.Equipment;
 import fr.cda.restaurant.menu.Menu;
@@ -45,9 +46,9 @@ public class Restaurant {
     @Column(nullable = false)
     private boolean annivDispo;
 
-    @ManyToOne // One Restaurant to Many Menus
-    @JoinColumn(name = "menu_id")
-    private Menu menu;
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Menu> menus = new ArrayList<>();
 
     @ManyToOne // One Restaurant to Many Equipments
     @JoinColumn(name = "equipment_id")
@@ -57,7 +58,8 @@ public class Restaurant {
     @JoinColumn(name = "review_id")
     private Review review;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Reservation> reservations = new ArrayList<>();
 
     @Column(nullable = false)

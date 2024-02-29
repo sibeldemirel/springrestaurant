@@ -67,5 +67,4 @@ public class RestaurantController {
     public RestaurantReduitDto findByNomRestaurantReduit(@PathVariable String restaurantName) {
         return restaurantMapper.toRestaurantReduit(restaurantService.findByNomRestaurant(restaurantName));
     }
-
 }

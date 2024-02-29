@@ -4,6 +4,7 @@ import fr.cda.restaurant.menu.dto.MenuCompletDto;
 import fr.cda.restaurant.menu.dto.MenuReduitDto;
 import fr.cda.restaurant.menu.mapper.MenuMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -76,5 +77,12 @@ public class MenuController {
     @GetMapping("reduit/{restaurantName}")
     public List<MenuReduitDto> findAllReduitByRestaurantName(@PathVariable String restaurantName) {
         return menuMapper.toMenuReduit(menuService.findAllByRestaurantName(restaurantName).orElse(new ArrayList<>()));
+    }
+
+    @PostMapping("/{restaurantId}/menus")
+    public ResponseEntity<MenuReduitDto> addMenuToRestaurant(@PathVariable Integer restaurantId, @RequestBody Menu menuDetails) {
+        Menu newMenu = menuService.createMenuForRestaurant(restaurantId, menuDetails);
+        MenuReduitDto menuDto = menuMapper.toMenuReduit(newMenu);
+        return new ResponseEntity<>(menuDto, HttpStatus.CREATED);
     }
 }

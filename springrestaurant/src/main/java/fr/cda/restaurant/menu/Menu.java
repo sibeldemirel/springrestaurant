@@ -1,5 +1,6 @@
 package fr.cda.restaurant.menu;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import fr.cda.restaurant.restaurant.Restaurant;
@@ -30,6 +31,7 @@ public class Menu {
 
     @ManyToOne // One Restaurant to Many Menus
     @JoinColumn(name = "restaurant_id")
+    @JsonBackReference
     private Restaurant restaurant;
 
     @Column(nullable = false)

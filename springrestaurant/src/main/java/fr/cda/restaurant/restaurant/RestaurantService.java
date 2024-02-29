@@ -2,6 +2,7 @@ package fr.cda.restaurant.restaurant;
 
 import fr.cda.restaurant.exceptions.BadRequestException;
 import fr.cda.restaurant.exceptions.NotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class RestaurantService {
         return restaurantRepository.findAll();
     }
 
+    @Transactional
     public Restaurant save(Restaurant restaurant) throws BadRequestException {
         verifyRestaurant(restaurant);
 
@@ -59,6 +61,7 @@ public class RestaurantService {
         restaurantRepository.delete(restaurant);
     }
 
+    @Transactional
     public Restaurant update(Restaurant restaurant, Integer id) {
         if (!restaurantRepository.existsById(id)) {
             throw new NotFoundException("Aucun restaurant avec l'ID " + id);
