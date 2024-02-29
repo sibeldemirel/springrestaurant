@@ -4,6 +4,5 @@ import lombok.Data;
 
 @Data
 public class EquipmentReduitDto {
-    private String name;
-    private boolean equiped;
+    private String nom;
 }

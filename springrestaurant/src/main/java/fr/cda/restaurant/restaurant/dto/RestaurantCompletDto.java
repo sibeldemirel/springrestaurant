@@ -1,6 +1,7 @@
 package fr.cda.restaurant.restaurant.dto;
 
 import fr.cda.restaurant.equipment.Equipment;
+import fr.cda.restaurant.equipment.dto.EquipmentReduitDto;
 import fr.cda.restaurant.menu.Menu;
 import fr.cda.restaurant.menu.dto.MenuCompletDto;
 import fr.cda.restaurant.menu.dto.MenuReduitDto;
@@ -8,6 +9,7 @@ import fr.cda.restaurant.reservation.Reservation;
 import fr.cda.restaurant.reservation.dto.ReservationCompletDto;
 import fr.cda.restaurant.reservation.dto.ReservationReduitDto;
 import fr.cda.restaurant.review.Review;
+import fr.cda.restaurant.review.dto.ReviewReduitDto;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -22,8 +24,8 @@ public class RestaurantCompletDto {
     private int couvertsDispo;
     private boolean annivDispo;
     private List<MenuReduitDto> menus;
-    private Equipment equipment;
-    private Review review;
+    private List<EquipmentReduitDto> equipments;
+    private List<ReviewReduitDto> reviews;
     private List<ReservationReduitDto> reservations;
     private int totalRating;
 }

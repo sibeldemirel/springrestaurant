@@ -1,7 +1,9 @@
 package fr.cda.restaurant.review;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import fr.cda.restaurant.restaurant.Restaurant;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,8 +23,10 @@ public class Review {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "restaurant_id")
-    private Integer restaurantId;
+    @ManyToOne // One Restaurant to Many Menus
+    @JoinColumn(name = "restaurant_id")
+    @JsonBackReference
+    private Restaurant restaurant;
 
     @Column(name = "nomrestaurant")
     private String restaurantName;

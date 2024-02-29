@@ -1,5 +1,9 @@
 package fr.cda.restaurant.equipment;
 
+import fr.cda.restaurant.exceptions.NotFoundException;
+import fr.cda.restaurant.menu.Menu;
+import fr.cda.restaurant.restaurant.Restaurant;
+import fr.cda.restaurant.restaurant.RestaurantRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,8 +13,13 @@ import java.util.Optional;
 public class EquipmentService {
     private final EquipmentRepository equipmentRepository;
 
-    public EquipmentService(EquipmentRepository equipmentRepository) {
+    private final RestaurantRepository restaurantRepository;
+
+    public EquipmentService(
+            EquipmentRepository equipmentRepository,
+            RestaurantRepository restaurantRepository) {
         this.equipmentRepository = equipmentRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public Equipment save(Equipment equipment) {
@@ -39,5 +48,11 @@ public class EquipmentService {
         equipmentRepository.delete(equipment);
     }
 
+    public Equipment createEquipmentForRestaurant(Integer equipmentId, Equipment equipment) {
+        Restaurant restaurant = restaurantRepository.findById(equipmentId)
+                .orElseThrow(() -> new NotFoundException("Equipment non trouvé avec l'ID: " + equipmentId));
+        equipment.setRestaurant(restaurant);
+        return equipmentRepository.save(equipment);
+    }
 
 }

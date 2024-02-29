@@ -1,7 +1,9 @@
 package fr.cda.restaurant.equipment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import fr.cda.restaurant.restaurant.Restaurant;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,9 +24,11 @@ public class Equipment {
     private Integer id;
 
     @Column(nullable = false)
-    private String name;
+    private String nom;
 
-    @Column(nullable = false)
-    private boolean equiped;
+    @ManyToOne // One Restaurant to Many Menus
+    @JoinColumn(name = "restaurant_id")
+    @JsonBackReference
+    private Restaurant restaurant;
 
 }

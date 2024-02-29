@@ -50,13 +50,13 @@ public class Restaurant {
     @JsonManagedReference
     private List<Menu> menus = new ArrayList<>();
 
-    @ManyToOne // One Restaurant to Many Equipments
-    @JoinColumn(name = "equipment_id")
-    private Equipment equipment;
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Equipment> equipment = new ArrayList<>();
 
-    @ManyToOne // One Restaurant to Many Reviews
-    @JoinColumn(name = "review_id")
-    private Review review;
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Review> review = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference

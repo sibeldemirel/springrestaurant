@@ -5,6 +5,5 @@ import lombok.Data;
 @Data
 public class EquipmentCompletDto {
     private Integer id;
-    private String name;
-    private boolean equiped;
+    private String nom;
 }
