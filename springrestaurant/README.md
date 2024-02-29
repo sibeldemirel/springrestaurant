@@ -6,16 +6,9 @@ To connect to the database:
     username : `restaurantadmin`
     password : `restaurant`
 
-base link :
-`http://localhost8080`
+base link : http://localhost:8080
 
-Basic routes :
-- /restaurants
-- /clients
-- /reservations
-- /equipments
-- /menus
-- /reviews
+Swagger path : http://localhost:8080/api/restaurant/docs
 
 ```@startuml
 
