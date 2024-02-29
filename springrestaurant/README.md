@@ -14,13 +14,7 @@ L'application est accessible à l'adresse suivante en local :
 - `http://localhost:8080`
 
 ## Routes Principales
-L'application expose plusieurs routes pour interagir avec le système de gestion de restaurant :
-- `/restaurants` : Gestion des restaurants
-- `/clients` : Gestion des clients
-- `/reservations` : Gestion des réservations utilisateurs
-- `/equipments` : Gestion des équipements d'un restaurant
-- `/menus` : Gestion des menus
-- `/reviews` : Gestion des avis utilisateurs
+- `http://localhost:8080/api/restaurant/swagger-ui/index.html`
 
 ## Documentation API
 La documentation de l'API est accessible via Swagger UI à l'adresse suivante : `http://localhost:8080/api/restaurant/docs`.
