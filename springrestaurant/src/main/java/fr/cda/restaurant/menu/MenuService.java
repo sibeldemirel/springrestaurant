@@ -112,7 +112,7 @@ public class MenuService {
 
     public Menu createMenuForRestaurant(Integer restaurantId, Menu menu) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
-                .orElseThrow(() -> new NotFoundException("Restaurant not found with id: " + restaurantId));
+                .orElseThrow(() -> new NotFoundException("Restaurant non trouvé avec l'ID: " + restaurantId));
         menu.setRestaurant(restaurant);
         return menuRepository.save(menu);
     }

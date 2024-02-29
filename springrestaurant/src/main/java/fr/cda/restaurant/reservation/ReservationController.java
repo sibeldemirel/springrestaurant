@@ -73,12 +73,15 @@ public class ReservationController {
 
     @PostMapping("/create")
     public ReservationCompletDto createReservation(@RequestBody ReservationRequestDto requestDto) {
-
         Client client = clientService.findOrCreateClient(requestDto.getNomClient(), requestDto.getTelephoneClient());
 
         Restaurant restaurant = restaurantService.findByNom(requestDto.getNomRestaurant());
         if (restaurant == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant non trouvé");
+        }
+
+        if (restaurant.getCouvertsDispo() < requestDto.getNbInvite()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Pas assez de couverts disponibles");
         }
 
         Reservation reservation = new Reservation();
@@ -88,13 +91,11 @@ public class ReservationController {
         reservation.setNbInvite(requestDto.getNbInvite());
         reservation.setAnniv(requestDto.isAnniv());
 
-        restaurant.getReservations().add(reservation);
+        restaurant.setCouvertsDispo(restaurant.getCouvertsDispo() - requestDto.getNbInvite());
 
         Reservation savedReservation = reservationService.save(reservation);
-
         restaurantService.save(restaurant);
 
         return reservationMapper.toReservationComplet(savedReservation);
     }
-
 }

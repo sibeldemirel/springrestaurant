@@ -4,6 +4,7 @@ import fr.cda.restaurant.exceptions.NotFoundException;
 import fr.cda.restaurant.menu.Menu;
 import fr.cda.restaurant.restaurant.Restaurant;
 import fr.cda.restaurant.restaurant.RestaurantRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class EquipmentService {
         this.restaurantRepository = restaurantRepository;
     }
 
+    @Transactional
     public Equipment save(Equipment equipment) {
         return equipmentRepository.save(equipment);
     }
@@ -34,6 +36,7 @@ public class EquipmentService {
     //    return equipmentRepository.findByEquipmentEquiped(String.valueOf(equipment.getEquiped()));
     //}
 
+    @Transactional
     public Equipment update(Equipment equipment, Integer id) {
         equipment.setId(id);
         return equipmentRepository.save(equipment);
@@ -43,16 +46,16 @@ public class EquipmentService {
         return equipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("no equipment found"));
     }
 
+    @Transactional
     public void deleteById(Integer id) {
         Equipment equipment = this.findById(id);
         equipmentRepository.delete(equipment);
     }
 
-    public Equipment createEquipmentForRestaurant(Integer equipmentId, Equipment equipment) {
-        Restaurant restaurant = restaurantRepository.findById(equipmentId)
-                .orElseThrow(() -> new NotFoundException("Equipment non trouvé avec l'ID: " + equipmentId));
+    public Equipment createEquipmentForRestaurant(Integer restaurantId, Equipment equipment) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new NotFoundException("Restaurant non trouvé avec l'ID: " + restaurantId));
         equipment.setRestaurant(restaurant);
         return equipmentRepository.save(equipment);
     }
-
 }
