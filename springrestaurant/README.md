@@ -1,5 +1,17 @@
 # Application de Gestion de Restaurant
 
+## Git
+
+https://github.com/sibeldemirel/springrestaurant
+
+## Technologies
+
+- Java 17
+- Spring boot
+- Lombok
+- MySQL
+- Docker
+
 ## Prérequis
 Pour exécuter le projet, vous devez d'abord démarrer Docker :
 - Exécutez `docker-compose up -d` dans le terminal à la racine du projet pour lancer les conteneurs Docker nécessaires.
@@ -12,9 +24,6 @@ Pour exécuter le projet, vous devez d'abord démarrer Docker :
 ## Lien de Base
 L'application est accessible à l'adresse suivante en local :
 - `http://localhost:8080`
-
-## Routes Principales
-- `http://localhost:8080/api/restaurant/swagger-ui/index.html`
 
 ## Documentation API
 La documentation de l'API est accessible via Swagger UI à l'adresse suivante : `http://localhost:8080/api/restaurant/docs`.
